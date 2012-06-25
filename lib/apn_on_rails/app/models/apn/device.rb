@@ -14,6 +14,9 @@ class APN::Device < APN::Base
   has_many :notifications, :class_name => 'APN::Notification'
   has_many :unsent_notifications, :class_name => 'APN::Notification', :conditions => 'sent_at is null'
   
+  has_many   :device_groupings, :class_name => "APN::DeviceGrouping", :dependent => :destroy
+  has_many   :groups, :class_name => 'APN::Group', :through => :device_groupings
+  
   validates_uniqueness_of :token, :scope => :app_id
   validates_format_of :token, :with => /^[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}\s[a-z0-9]{8}$/
   
